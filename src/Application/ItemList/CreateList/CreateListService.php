@@ -1,8 +1,8 @@
 <?php
 
-namespace Application\CreateList;
+namespace Application\ItemList\CreateList;
 
-use Application\Repository\ItemListRepositoryInterface;
+use Application\ItemList\Repository\ItemListRepositoryInterface;
 use Domain\ItemList\ItemList;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Messenger\MessageBusInterface;

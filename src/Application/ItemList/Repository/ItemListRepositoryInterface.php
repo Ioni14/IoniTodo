@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Repository;
+namespace Application\ItemList\Repository;
 
 use Domain\ItemList\ItemList;
 

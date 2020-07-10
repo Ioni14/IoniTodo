@@ -1,8 +1,8 @@
 <?php
 
-namespace Infra\Repository;
+namespace Infra\ItemList\Repository;
 
-use Application\Repository\ItemListRepositoryInterface;
+use Application\ItemList\Repository\ItemListRepositoryInterface;
 use Domain\ItemList\ItemList;
 
 class ItemListInMemoryRepository implements ItemListRepositoryInterface

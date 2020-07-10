@@ -1,9 +1,9 @@
 <?php
 
-namespace Infra\Command;
+namespace Infra\ItemList\Command;
 
-use Application\CreateList\CreateList;
-use Application\CreateList\CreateListService;
+use Application\ItemList\CreateList\CreateList;
+use Application\ItemList\CreateList\CreateListService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

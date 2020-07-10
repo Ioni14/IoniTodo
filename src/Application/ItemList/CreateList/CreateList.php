@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\CreateList;
+namespace Application\ItemList\CreateList;
 
 class CreateList
 {

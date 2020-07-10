@@ -1,0 +1,15 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Infra\ItemList\:
+        resource: '../src/Infra/ItemList'
+
+    Infra\ItemList\Controller\:
+        resource: '../src/Infra/ItemList/Controller'
+        tags: ['controller.service_arguments']
+
+    Application\ItemList\CreateList\CreateListService: ~
+
+    Application\ItemList\Repository\ItemListRepositoryInterface: '@Infra\ItemList\Repository\ItemListInMemoryRepository'

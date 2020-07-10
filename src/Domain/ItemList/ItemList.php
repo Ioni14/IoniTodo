@@ -24,7 +24,7 @@ class ItemList
     public static function create(UuidInterface $uuid, string $name): self
     {
         $self = new self($uuid, $name);
-        $self->events[] = new ListCreatedEvent($self);
+        $self->events[] = ListCreatedEvent::createFromList($self);
 
         return $self;
     }

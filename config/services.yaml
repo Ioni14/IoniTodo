@@ -1,17 +1,11 @@
 imports:
-    - { resource: repositories.yaml }
+    - { resource: item_list_services.yaml }
 
 services:
     _defaults:
         autowire: true
         autoconfigure: true
 
-    Infra\:
-        resource: '../src/Infra/*'
-        exclude: '../src/Infra/{DependencyInjection,Migrations,Tests,Kernel.php}'
-
-    Infra\Controller\:
-        resource: '../src/Infra/Controller'
-        tags: ['controller.service_arguments']
-
-    Application\CreateList\CreateListService: ~
+    Algolia\AlgoliaSearch\SearchClient:
+        factory: 'Algolia\AlgoliaSearch\SearchClient::create'
+        arguments: ['%env(ALGOLIA_API_CLIENT)%', '%env(ALGOLIA_API_KEY)%']
