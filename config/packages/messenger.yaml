@@ -1,0 +1,16 @@
+framework:
+    messenger:
+        # failure_transport: failed
+        default_bus: command.bus
+
+        transports:
+            # https://symfony.com/doc/current/messenger.html#transport-configuration
+            # async: '%env(MESSENGER_TRANSPORT_DSN)%'
+            # failed: 'doctrine://default?queue_name=failed'
+            sync: 'sync://'
+        routing:
+            Domain\ItemList\ListCreatedEvent: sync
+        buses:
+            command.bus: ~
+            event.bus:
+                default_middleware: allow_no_handlers

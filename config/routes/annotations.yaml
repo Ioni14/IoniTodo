@@ -1,0 +1,3 @@
+controllers:
+    resource: ../../src/Infra/Controller/
+    type: annotation

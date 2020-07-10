@@ -1,0 +1,6 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Application\Repository\ItemListRepositoryInterface: '@Infra\Repository\ItemListInMemoryRepository'
