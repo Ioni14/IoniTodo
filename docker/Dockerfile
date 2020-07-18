@@ -109,8 +109,6 @@ USER root
 ###############################
 FROM build_php as build_php_dev
 
-RUN ls -la /app
-
 # dev|test
 ARG ENV=dev
 
@@ -120,14 +118,10 @@ ENV COMPOSER_MEMORY_LIMIT -1
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /.composer
 
-RUN ls -la /app
-
 COPY --chown=root:root docker/php/php.dev.ini /usr/local/etc/php/php-fpm.ini
 COPY --chown=root:root docker/php/php-cli.dev.ini /usr/local/etc/php/php-cli.ini
 COPY --chown=root:root docker/php/php-fpm.dev.conf /usr/local/etc/php-fpm.conf
 COPY --chown=root:root docker/php/www.dev.conf /usr/local/etc/php-fpm.d/www.conf
-
-RUN ls -la /app
 
 # Xdebug install
 ARG XDEBUG_VERSION=2.9.2
@@ -140,10 +134,9 @@ RUN set -eux; \
 ENV PANTHER_NO_SANDBOX 1
 
 USER www-data
-
-# PHPUnit install
-RUN pwd; ls -la; ls -la /app; ls -la bin; if [ $ENV = 'test' ]; then /app/bin/phpunit --version; fi
-
 COPY --chown=www-data:www-data tests tests
 COPY --chown=www-data:www-data phpunit.xml.dist phpunit.xml.dist
 #COPY --chown=www-data:www-data public/index_test.php public/
+
+# PHPUnit install
+RUN if [ $ENV = 'test' ]; then /app/bin/phpunit --version; fi
