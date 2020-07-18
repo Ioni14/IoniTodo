@@ -134,7 +134,7 @@ ENV PANTHER_NO_SANDBOX 1
 USER www-data
 
 # PHPUnit install
-RUN if [ $ENV = 'test' ]; then /app/bin/phpunit --version; fi
+RUN ls -la; ls -la bin; if [ $ENV = 'test' ]; then /app/bin/phpunit --version; fi
 
 COPY --chown=www-data:www-data tests tests
 COPY --chown=www-data:www-data phpunit.xml.dist phpunit.xml.dist
