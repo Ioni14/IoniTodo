@@ -129,13 +129,13 @@ RUN set -eux; \
     && apt-get remove -y $PHPIZE_DEPS \
     && rm -rf /var/lib/apt/lists/* /tmp/*
 
-# PHPUnit install
-RUN chown -R www-data:www-data /.composer \
-    && if [ $ENV = 'test' ]; then /app/bin/phpunit --version; fi
-
 ENV PANTHER_NO_SANDBOX 1
 
 USER www-data
+
+# PHPUnit install
+RUN if [ $ENV = 'test' ]; then /app/bin/phpunit --version; fi
+
 COPY --chown=www-data:www-data tests tests
 COPY --chown=www-data:www-data phpunit.xml.dist phpunit.xml.dist
 #COPY --chown=www-data:www-data public/index_test.php public/
