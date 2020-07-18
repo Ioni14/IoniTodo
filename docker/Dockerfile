@@ -83,6 +83,8 @@ RUN mkdir -p public/bundles \
 ENTRYPOINT ["docker-app-entrypoint"]
 CMD ["php-fpm"]
 
+RUN ls -la /app
+
 ##############################
 FROM httpd:2.4 as build_apache
 
@@ -107,6 +109,8 @@ USER root
 ###############################
 FROM build_php as build_php_dev
 
+RUN ls -la /app
+
 # dev|test
 ARG ENV=dev
 
@@ -116,10 +120,14 @@ ENV COMPOSER_MEMORY_LIMIT -1
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /.composer
 
+RUN ls -la /app
+
 COPY --chown=root:root docker/php/php.dev.ini /usr/local/etc/php/php-fpm.ini
 COPY --chown=root:root docker/php/php-cli.dev.ini /usr/local/etc/php/php-cli.ini
 COPY --chown=root:root docker/php/php-fpm.dev.conf /usr/local/etc/php-fpm.conf
 COPY --chown=root:root docker/php/www.dev.conf /usr/local/etc/php-fpm.d/www.conf
+
+RUN ls -la /app
 
 # Xdebug install
 ARG XDEBUG_VERSION=2.9.2
