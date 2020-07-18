@@ -21,7 +21,6 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /tmp/*
 
 RUN mkdir -p /app /.composer && chown -R www-data:www-data /app /.composer
-WORKDIR /app
 USER www-data
 
 WORKDIR /app
@@ -128,9 +127,11 @@ RUN set -eux; \
     apt-get update && apt-get install -y $PHPIZE_DEPS chromium git \
 	&& pecl install xdebug-$XDEBUG_VERSION \
     && apt-get remove -y $PHPIZE_DEPS \
-    && rm -rf /var/lib/apt/lists/* /tmp/* \
-    && mkdir -p /.composer && chown -R www-data:www-data /.composer \
-    && if [ $ENV = 'test' ]; then bin/phpunit --version; fi
+    && rm -rf /var/lib/apt/lists/* /tmp/*
+
+# PHPUnit install
+RUN chown -R www-data:www-data /.composer \
+    && if [ $ENV = 'test' ]; then /app/bin/phpunit --version; fi
 
 ENV PANTHER_NO_SANDBOX 1
 
