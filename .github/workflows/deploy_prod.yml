@@ -18,4 +18,4 @@ jobs:
                     username: ${{ DOCKER_USERNAME }}
                     password: ${{ DOCKER_PASSWORD }}
             -   name: Push images
-                run: docker push ioni-todo/php:latest ioni-todo/php:$GITHUB_RUN_ID
+                run: echo -n "ioni-todo/php:latest ioni-todo/php:$GITHUB_RUN_ID" | xargs -d' ' -I{} --max-procs=10 --verbose docker image push {}
