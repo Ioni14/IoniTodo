@@ -129,6 +129,7 @@ RUN set -eux; \
 	&& pecl install xdebug-$XDEBUG_VERSION \
     && apt-get remove -y $PHPIZE_DEPS \
     && rm -rf /var/lib/apt/lists/* /tmp/* \
+    && mkdir -p /.composer && chown -R www-data:www-data /.composer \
     && if [ $ENV = 'test' ]; then bin/phpunit --version; fi
 
 ENV PANTHER_NO_SANDBOX 1
