@@ -31,7 +31,7 @@ FROM req_php as composer_deps
 
 COPY --from=composer:2.0 /usr/bin/composer /usr/local/bin/composer
 
-# prod|dev
+# prod|dev|test
 ARG ENV=prod
 
 COPY --chown=www-data:www-data src src
@@ -51,7 +51,7 @@ RUN if [ $ENV = 'prod' ]; then \
 ####################################
 FROM req_php as build_php
 
-# prod|dev
+# prod|dev|test
 ARG ENV=prod
 ARG DUMP_ENV=0
 
@@ -64,7 +64,7 @@ COPY --chown=root:root docker/php/entrypoint.sh /usr/local/bin/docker-app-entryp
 RUN chmod +x /usr/local/bin/docker-app-entrypoint
 
 USER www-data
-COPY --chown=www-data:www-data bin/console bin/
+COPY --chown=www-data:www-data bin bin
 COPY --chown=www-data:www-data config config
 COPY --chown=www-data:www-data public/index.php public/
 COPY --chown=www-data:www-data src src
@@ -108,7 +108,8 @@ USER root
 ###############################
 FROM build_php as build_php_dev
 
-COPY public/index_test.php public/
+# dev|test
+ARG ENV=dev
 
 USER root
 COPY --from=composer:2.0 /usr/bin/composer /usr/local/bin/composer
@@ -127,8 +128,12 @@ RUN set -eux; \
     apt-get update && apt-get install -y $PHPIZE_DEPS chromium git \
 	&& pecl install xdebug-$XDEBUG_VERSION \
     && apt-get remove -y $PHPIZE_DEPS \
-    && rm -rf /var/lib/apt/lists/* /tmp/*
+    && rm -rf /var/lib/apt/lists/* /tmp/* \
+    && if [ $ENV = 'test' ]; then bin/phpunit --version; fi
 
 ENV PANTHER_NO_SANDBOX 1
 
 USER www-data
+COPY --chown=www-data:www-data tests tests
+COPY --chown=www-data:www-data phpunit.xml.dist phpunit.xml.dist
+#COPY --chown=www-data:www-data public/index_test.php public/
