@@ -10,6 +10,6 @@ services:
         resource: '../src/Infra/ItemList/Controller'
         tags: ['controller.service_arguments']
 
-    Application\ItemList\CreateList\CreateListService: ~
+    Application\ItemList\CreateList\CreateListUsecase: ~
 
     Application\ItemList\Repository\ItemListRepositoryInterface: '@Infra\ItemList\Repository\ItemListInMemoryRepository'

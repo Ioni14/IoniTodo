@@ -6,26 +6,26 @@ use Domain\Common\EventInterface;
 
 class ListCreatedEvent implements EventInterface
 {
-    private string $uuid;
+    private ItemListId $id;
     private string $name;
 
-    public function __construct(string $uuid, string $name)
+    public function __construct(ItemListId $id, string $name)
     {
-        $this->uuid = $uuid;
+        $this->id = $id;
         $this->name = $name;
     }
 
     public static function createFromList(ItemList $list): self
     {
         return new self(
-            $list->getUuid()->toString(),
+            $list->getId(),
             $list->getName(),
         );
     }
 
-    public function getUuid(): string
+    public function getId(): ItemListId
     {
-        return $this->uuid;
+        return $this->id;
     }
 
     public function getName(): string

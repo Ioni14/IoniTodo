@@ -1,0 +1,15 @@
+{
+    "source": {
+        "directories": [
+            "src\/Domain",
+            "src\/Application",
+            "src\/Infra"
+        ]
+    },
+    "logs": {
+        "text": "var/log/infection.log"
+    },
+    "mutators": {
+        "@default": true
+    }
+}

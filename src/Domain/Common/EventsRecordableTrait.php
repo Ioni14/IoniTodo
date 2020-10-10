@@ -11,6 +11,11 @@ trait EventsRecordableTrait
      */
     private array $events = [];
 
+    private function recordEvent(EventInterface $event): void
+    {
+        $this->events[] = $event;
+    }
+
     public function releaseEvents(): array
     {
         $events = $this->events;

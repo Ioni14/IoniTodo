@@ -21,8 +21,8 @@ class SearchIndexListCreatedHandler implements MessageHandlerInterface
 
         // TODO : add a field "version" to prevent lost-updates #pessimisticLock
         $response = $index->saveObject([
-            'objectID' => $event->getUuid(),
-            'uuid' => $event->getUuid(),
+            'objectID' => (string) $event->getId(),
+            'uuid' => (string) $event->getId(),
             'name' => $event->getName(),
         ]);
 

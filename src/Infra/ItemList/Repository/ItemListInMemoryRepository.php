@@ -11,6 +11,11 @@ class ItemListInMemoryRepository implements ItemListRepositoryInterface
 
     public function save(ItemList $list): void
     {
-        $this->lists[$list->getUuid()->toString()] = $list;
+        $this->lists[(string) $list->getId()] = $list;
+    }
+
+    public function getAll(): array
+    {
+        return $this->lists;
     }
 }

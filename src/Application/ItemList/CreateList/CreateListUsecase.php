@@ -2,26 +2,32 @@
 
 namespace Application\ItemList\CreateList;
 
+use Application\Common\UuidFactory;
 use Application\ItemList\Repository\ItemListRepositoryInterface;
 use Domain\ItemList\ItemList;
-use Ramsey\Uuid\Uuid;
+use Domain\ItemList\ItemListId;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-class CreateListService
+class CreateListUsecase
 {
     private ItemListRepositoryInterface $itemListRepository;
     private MessageBusInterface $eventBus;
+    private UuidFactory $uuidFactory;
 
-    public function __construct(ItemListRepositoryInterface $itemListRepository, MessageBusInterface $eventBus)
+    public function __construct(ItemListRepositoryInterface $itemListRepository, MessageBusInterface $eventBus, UuidFactory $uuidFactory)
     {
         $this->itemListRepository = $itemListRepository;
         $this->eventBus = $eventBus;
+        $this->uuidFactory = $uuidFactory;
     }
 
     public function __invoke(CreateList $command): void
     {
-        // TODO : Uuid::uuid4() is Infra related (use Random device)
-        $list = ItemList::create(Uuid::uuid4(), $command->name);
+        $list = ItemList::create(
+            ItemListId::fromString($this->uuidFactory->create()),
+            $command->name,
+            new \DateTimeImmutable('now')
+        );
 
         $this->itemListRepository->save($list);
 

@@ -3,7 +3,7 @@
 namespace Infra\ItemList\Command;
 
 use Application\ItemList\CreateList\CreateList;
-use Application\ItemList\CreateList\CreateListService;
+use Application\ItemList\CreateList\CreateListUsecase;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -14,11 +14,11 @@ class CreateListCommand extends Command
 {
     protected static $defaultName = 'app:list:create';
 
-    private CreateListService $createListService;
+    private CreateListUsecase $createListUsecase;
 
-    public function __construct(CreateListService $createListService)
+    public function __construct(CreateListUsecase $createListUsecase)
     {
-        $this->createListService = $createListService;
+        $this->createListUsecase = $createListUsecase;
         parent::__construct();
     }
 
@@ -31,7 +31,7 @@ class CreateListCommand extends Command
     {
         $name = $input->getArgument('name');
 
-        ($this->createListService)(new CreateList($name));
+        ($this->createListUsecase)(new CreateList($name));
 
         $io = new SymfonyStyle($input, $output);
         $io->success(sprintf('The list %s has been created.', $name));
